@@ -63,6 +63,7 @@ def upload_to_ppe_analytics(csv_zip: Path, xlsx_zip: Path) -> None:
 
 def process_export(zip_archive: str | Path) -> tuple[Path, Path]:
     """Main function."""
+    csv_zip: Path
     if isinstance(zip_archive, str):
         csv_zip = Path(zip_archive)
     else:
@@ -99,7 +100,7 @@ def process_export(zip_archive: str | Path) -> tuple[Path, Path]:
                 xlsx_zip.writestr(
                     csv_file.filename.removesuffix(".csv") + ".xlsx", xlsxf.read()
                 )
-    csv_zip.rename(csv_zip_new_name)
+    csv_zip = csv_zip.rename(csv_zip_new_name)
     return csv_zip, xlsx_zip_path
 
 
