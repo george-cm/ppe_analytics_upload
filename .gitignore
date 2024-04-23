@@ -1,5 +1,8 @@
 .pytest_cache
 .vscode
+build
+dist
+pyinstaller.txt
 *.zip
 *.csv
 *.xlsx

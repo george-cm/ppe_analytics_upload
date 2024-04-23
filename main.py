@@ -1,50 +1,69 @@
-"""Main script to uplpad the data from PIM to PPE-Analytics server"""
+"""This program takes in a zip archive file containing CSV PIM data exports.
+It then converts the CSV files to Excel xlsx files and archives them in a new zip file.
+It then uploads the two zip files to the PPE-Analytics server."""
 
 import argparse
 import datetime
+import time
 import tomllib
 import zipfile
 from pathlib import Path
 from tempfile import SpooledTemporaryFile
+from typing import Any
 
 import niquests as requests
 
 from ppe_analytics_upload.csv2xlsx import csv2xlsx_filelike
 from ppe_analytics_upload.utils import extract_date_from_zipfile
 
+__version__ = "0.1.0"
+
 
 def main() -> None:
     """Main function."""
+    start = time.monotonic_ns()
     parser = argparse.ArgumentParser(
-        description="Upload PPE PIM data exports to PPE-Analytics server"
+        prog="ppeupload",
+        description=__doc__,
     )
     parser.add_argument(
         "zip_archive",
         type=str,
         help="The path to the zip archive containing the CSV export files.",
     )
+    parser.add_argument("--version", "-V", action="version", version=__version__)
     args = parser.parse_args()
     if not args.zip_archive:
         raise SystemExit("No zip archive specified.")
     no_gui(args.zip_archive)
+    end = time.monotonic_ns()
+    duration = end - start
+    duration_us = duration / 1e3
+    duration_timedelta = datetime.timedelta(microseconds=duration_us)
+    print(f"Program took {duration_timedelta} to run.")
 
 
 def no_gui(zip_archive: str | Path) -> None:
     """Process the zip archive in the terminal"""
     csv_zip, xlsx_zip = process_export(zip_archive)
-    # csv_zip = Path("PPE-Analytics_fullexport_csv_20240419100908.zip")
-    # xlsx_zip = Path("PPE-Analytics_fullexport_xlsx_20240419100908.zip")
+    # csv_zip = Path(
+    #     "C:/Users/e313532/Documents/Projects/ppe_analytics_upload/PPE-Analytics_fullexport_csv_20240419100908.zip"
+    # )
+    # xlsx_zip = Path(
+    #     "C:/Users/e313532/Documents/Projects/ppe_analytics_upload/PPE-Analytics_fullexport_xlsx_20240419100908.zip"
+    # )
     upload_to_ppe_analytics(csv_zip, xlsx_zip)
 
 
 def upload_to_ppe_analytics(csv_zip: Path, xlsx_zip: Path) -> None:
     """Upload the csv and xlsx zip files to PPE-Analytics server"""
     ses = requests.Session(multiplexed=True)
-    with open("config.toml", "rb") as config_file:
-        config = tomllib.load(config_file)
-    csv_endpoint = config["server"]["csv_endpoint"]
-    xlsx_endpoint = config["server"]["xlsx_endpoint"]
-    ppe_api_key = config["server"]["PPEApiKey"]
+    config_path: Path = Path(__file__).parent / "config.toml"
+    with config_path.open("rb") as config_file:
+        config: dict[str, Any] = tomllib.load(config_file)
+    csv_endpoint: str = config["server"]["csv_endpoint"]
+    xlsx_endpoint: str = config["server"]["xlsx_endpoint"]
+    ppe_api_key: str = config["server"]["PPEApiKey"]
     ses.headers["PPEApiKey"] = ppe_api_key
 
     print(f"Uploading {csv_zip.name} to PPE-Analytics server")

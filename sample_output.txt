@@ -1,0 +1,23 @@
+❯ & .\dist\ppeupload\ppeupload.exe '.\CSV Item For PPE-Analytics Partner.zip'
+Converting data_dictionary_20240419100908_v10.csv
+Converting feature_groups_hpt-ppe_20240419100908_v10.csv
+Converting file_relationships_20240419100908_v10.csv
+Converting item_attributes_20240419100908_v10.csv
+Converting item_list_20240419100908_v10.csv
+Converting item_logistics_20240419100908_v10.csv
+Converting item_media_20240419100908_v10.csv
+Converting item_parent_product_20240419100908_v10.csv
+Converting item_sales_orgs_20240419100908_v10.csv
+Converting item_texts_20240419100908_v10.csv
+Converting product_attributes_20240419100908_v10.csv
+Converting product_classification_20240419100908_v10.csv
+Converting product_list_20240419100908_v10.csv
+Converting product_media_20240419100908_v10.csv
+Converting product_texts_20240419100908_v10.csv
+Converting structure_HPT-HPPE_20240419100908_v10.csv
+Converting structure_OneSPS-Ecommerce_20240419100908_v10.csv
+Uploading PPE-Analytics_fullexport_csv_20240419100908.zip to PPE-Analytics server
+{'status': 'OK', 'message': "File correctly uploaded to container '70f002b3-36bd-44fa-9476-e59c764ba9a5' as version 9"}
+Uploading PPE-Analytics_fullexport_xlsx_20240419100908.zip to PPE-Analytics server
+{'status': 'OK', 'message': "File correctly uploaded to container 'd1442064-24b9-49b3-89dd-d6599d0b2f1d' as version 10"}
+Program took 0:08:10.171000 to run.
