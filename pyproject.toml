@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ppe-analytics-upload"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["George Murgă <george.murga+github@gmail.com>"]
 license = "MIT"
@@ -20,6 +20,7 @@ pytest = "^8.1.1"
 pylint = "^3.1.0"
 pyinstaller = "^6.6.0"
 isort = "^5.13.2"
+types-pyinstaller = "^6.6.0.20240426"
 
 [build-system]
 requires = ["poetry-core"]

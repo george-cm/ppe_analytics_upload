@@ -16,12 +16,12 @@ import niquests as requests
 from ppe_analytics_upload.csv2xlsx import csv2xlsx_filelike
 from ppe_analytics_upload.utils import extract_date_from_zipfile
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def main() -> None:
     """Main function."""
-    start = time.monotonic_ns()
+    start: int = time.monotonic_ns()
     parser = argparse.ArgumentParser(
         prog="ppeupload",
         description=__doc__,
@@ -32,26 +32,22 @@ def main() -> None:
         help="The path to the zip archive containing the CSV export files.",
     )
     parser.add_argument("--version", "-V", action="version", version=__version__)
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
     if not args.zip_archive:
         raise SystemExit("No zip archive specified.")
     no_gui(args.zip_archive)
-    end = time.monotonic_ns()
-    duration = end - start
-    duration_us = duration / 1e3
+    end: int = time.monotonic_ns()
+    duration: int = end - start
+    duration_us: float = duration / 1e3
     duration_timedelta = datetime.timedelta(microseconds=duration_us)
     print(f"Program took {duration_timedelta} to run.")
 
 
 def no_gui(zip_archive: str | Path) -> None:
     """Process the zip archive in the terminal"""
+    csv_zip: Path
+    xlsx_zip: Path
     csv_zip, xlsx_zip = process_export(zip_archive)
-    # csv_zip = Path(
-    #     "C:/Users/e313532/Documents/Projects/ppe_analytics_upload/PPE-Analytics_fullexport_csv_20240419100908.zip"
-    # )
-    # xlsx_zip = Path(
-    #     "C:/Users/e313532/Documents/Projects/ppe_analytics_upload/PPE-Analytics_fullexport_xlsx_20240419100908.zip"
-    # )
     upload_to_ppe_analytics(csv_zip, xlsx_zip)
 
 
@@ -89,7 +85,7 @@ def process_export(zip_archive: str | Path) -> tuple[Path, Path]:
         csv_zip = zip_archive
     export_date: datetime.datetime = extract_date_from_zipfile(csv_zip)
     export_date_str: str = export_date.strftime("%Y%m%d%H%M%S")
-    csv_zip_new_name: str = f"PPE-Analytics_fullexport_csv_{export_date_str}.zip"
+    csv_zip_new_name: Path = csv_zip.parent / f"PPE-Analytics_fullexport_csv_{export_date_str}.zip"
     xlsx_zip_path: Path = (
         csv_zip.parent / f"PPE-Analytics_fullexport_xlsx_{export_date_str}.zip"
     )

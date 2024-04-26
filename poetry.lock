@@ -778,6 +778,31 @@ files = [
 ]
 
 [[package]]
+name = "types-pyinstaller"
+version = "6.6.0.20240426"
+description = "Typing stubs for pyinstaller"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-pyinstaller-6.6.0.20240426.tar.gz", hash = "sha256:6cb61b23930282ce18bfcaf080c757af24ad4fc7aece2710745226395c50dac2"},
+    {file = "types_pyinstaller-6.6.0.20240426-py3-none-any.whl", hash = "sha256:229c191669a54a551eb187852052b44cb4ceb9f5b468f27081252a688d74d520"},
+]
+
+[package.dependencies]
+types-setuptools = "*"
+
+[[package]]
+name = "types-setuptools"
+version = "69.5.0.20240423"
+description = "Typing stubs for setuptools"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-setuptools-69.5.0.20240423.tar.gz", hash = "sha256:a7ba908f1746c4337d13f027fa0f4a5bcad6d1d92048219ba792b3295c58586d"},
+    {file = "types_setuptools-69.5.0.20240423-py3-none-any.whl", hash = "sha256:a4381e041510755a6c9210e26ad55b1629bc10237aeb9cb8b6bd24996b73db48"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.11.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -900,4 +925,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<3.13"
-content-hash = "5d761231efcc8a7345583164bd3eca6cd47f98b6a9b341593c13351bb9dd16fd"
+content-hash = "7234b3bbe782bbfd7fbc5c05449b222d2995a443936d22933ebb4c0a0084d135"
