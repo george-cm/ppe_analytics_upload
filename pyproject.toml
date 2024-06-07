@@ -12,6 +12,8 @@ xlsxwriter = "^3.2.0"
 chardet = "^5.2.0"
 pysimplegui = "^5.0.4"
 niquests = "^3.5.5"
+requests-toolbelt = "^1.0.0"
+clint = "^0.5.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.0"
