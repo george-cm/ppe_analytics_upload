@@ -123,15 +123,16 @@ def upload_to_ppe_analytics(csv_zip: Path, xlsx_zip: Path) -> None:
     encoder = create_upload(csv_zip)
     callback = create_callback(encoder)
     monitor = MultipartEncoderMonitor(encoder, callback)
-    res = ses.post(
-        csv_endpoint,
-        data=monitor,  # type: ignore
-        headers={"Content-Type": monitor.content_type},
-        timeout=(120 * 60, 120 * 60),
-    )
-    if res.status_code != 200:
-        raise SystemExit(f"Error uploading {csv_zip.name} to PPE-Analytics server")
-    print(res.json())
+    # res = ses.post(
+    #     csv_endpoint,
+    #     data=monitor,  # type: ignore
+    #     headers={"Content-Type": monitor.content_type},
+    #     timeout=(120 * 60, 120 * 60),
+    # )
+    # if res.status_code != 200:
+    #     print(f"{res.status_code}, {res.reason}")
+    #     raise SystemExit(f"Error uploading {csv_zip.name} to PPE-Analytics server")
+    # print(res.json())
     print(f"Uploading {xlsx_zip.name} to PPE-Analytics server")
     # with xlsx_zip.open("rb") as xlsx_file:
     #     res = ses.post(
@@ -150,9 +151,10 @@ def upload_to_ppe_analytics(csv_zip: Path, xlsx_zip: Path) -> None:
         xlsx_endpoint,
         data=monitor,  # type: ignore
         headers={"Content-Type": monitor.content_type},
-        timeout=(120 * 60, 120 * 60),
+        timeout=(420 * 60, 420 * 60),
     )
     if res.status_code != 200:
+        print(f"{res.status_code}, {res.reason}")
         raise SystemExit(f"Error uploading {xlsx_zip.name} to PPE-Analytics server")
     print(res.json())
 
